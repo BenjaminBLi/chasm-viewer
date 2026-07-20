@@ -1,0 +1,32 @@
+[
+	{
+		"id": "1",
+		"title": "Gravity Anchor",
+		"type": "Mod",
+		"effect": "Reduces fall damage by 80% and stabilizes footing on unstable ledges."
+	},
+	{
+		"id": "2",
+		"title": "Echo Dampener",
+		"type": "Accessory",
+		"effect": "Muffles sound in a wide radius, preventing echoes from alerting nearby dwellers."
+	},
+	{
+		"id": "3",
+		"title": "Lumen Core",
+		"type": "Mod",
+		"effect": "Emits a steady glow in total darkness and slowly recharges from ambient minerals."
+	},
+	{
+		"id": "4",
+		"title": "Chasm Grapple",
+		"type": "Accessory",
+		"effect": "Fires a retractable line across gaps, letting you cross collapsed bridges safely."
+	},
+	{
+		"id": "5",
+		"title": "Depth Rebreather",
+		"type": "Mod",
+		"effect": "Filters toxic air found in the silent depths, extending safe exploration time."
+	}
+]

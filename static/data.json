@@ -1,0 +1,37 @@
+[
+	{
+		"id": "1",
+		"planet": "Verdant Reach",
+		"title": "The First Descent",
+		"severity": 1,
+		"description": "A quiet beginning at the edge of the chasm. The path down is narrow and the light fades quickly, but the way forward is clear enough for those willing to take the first step."
+	},
+	{
+		"id": "2",
+		"planet": "Kethara Prime",
+		"title": "Echoing Halls",
+		"severity": 3,
+		"description": "Vast underground caverns where every sound returns threefold. Explorers have mapped only a fraction of the interconnected chambers that spread beneath the surface."
+	},
+	{
+		"id": "3",
+		"planet": "Aurelia",
+		"title": "The Luminous Pools",
+		"severity": 2,
+		"description": "Still waters that glow with a soft blue light, fed by minerals leaching from the rock above. A rare and fragile ecosystem thrives in the dark."
+	},
+	{
+		"id": "4",
+		"planet": "Drakos IX",
+		"title": "Fractured Bridge",
+		"severity": 5,
+		"description": "An ancient span crossing the deepest part of the divide. Half of it has collapsed into the black below, leaving only a treacherous ledge for the daring."
+	},
+	{
+		"id": "5",
+		"planet": "The Nadir",
+		"title": "The Silent Depths",
+		"severity": 6,
+		"description": "Where the chasm bottoms out and sound itself seems to disappear. Few have reached this far, and fewer still have documented what they found."
+	}
+]
