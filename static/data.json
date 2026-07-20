@@ -1,6 +1,7 @@
 [
 	{
 		"id": "1",
+		"faction": "The Delvers' Guild",
 		"planet": "Verdant Reach",
 		"title": "The First Descent",
 		"severity": 1,
@@ -8,6 +9,7 @@
 	},
 	{
 		"id": "2",
+		"faction": "The Delvers' Guild",
 		"planet": "Kethara Prime",
 		"title": "Echoing Halls",
 		"severity": 3,
@@ -15,6 +17,7 @@
 	},
 	{
 		"id": "3",
+		"faction": "The Lumen Order",
 		"planet": "Aurelia",
 		"title": "The Luminous Pools",
 		"severity": 2,
@@ -22,6 +25,7 @@
 	},
 	{
 		"id": "4",
+		"faction": "The Ashen Vanguard",
 		"planet": "Drakos IX",
 		"title": "Fractured Bridge",
 		"severity": 5,
@@ -29,6 +33,7 @@
 	},
 	{
 		"id": "5",
+		"faction": "The Ashen Vanguard",
 		"planet": "The Nadir",
 		"title": "The Silent Depths",
 		"severity": 6,

@@ -1,5 +1,7 @@
 <script>
 	import { base } from '$app/paths';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import PageShell from '$lib/PageShell.svelte';
 
@@ -14,27 +16,76 @@
 	/** @type {'sev-desc' | 'sev-asc' | 'planet'} */
 	let sort = $state('sev-desc');
 
+
 	/**
-	 * The currently expanded item, or null when the grid is shown.
+	 * The currently expanded quest, or null when the grid is shown.
 	 * @type {Record<string, any> | null}
 	 */
 	let selected = $state(null);
 
-	let filtered = $derived.by(() => {
+	/** @param {Record<string, any>} item */
+	function factionOf(item) {
+		return String(item.faction ?? 'Unaligned');
+	}
+
+	/** @type {Array<{ name: string; quests: Array<Record<string, any>> }>} */
+	let factions = $derived.by(() => {
+		/** @type {Map<string, Array<Record<string, any>>>} */
+		const map = new Map();
+		for (const item of items) {
+			const name = factionOf(item);
+			const list = map.get(name);
+			if (list) list.push(item);
+			else map.set(name, [item]);
+		}
+		return [...map.entries()]
+			.map(([name, quests]) => ({ name, quests }))
+			.sort((a, b) => a.name.localeCompare(b.name));
+	});
+
+	/**
+	 * The faction currently being viewed, derived from the URL `?faction=` param.
+	 * The URL is the source of truth so the view is linkable and survives refresh.
+	 * @type {string | null}
+	 */
+	let selectedFaction = $derived.by(() => {
+		const raw = $page.url.searchParams.get('faction');
+		if (!raw) return null;
+		// Once data is loaded, treat an unknown faction as the grid.
+		if (items.length > 0 && !factions.some((f) => f.name === raw)) return null;
+		return raw;
+	});
+
+	/** Factions filtered by the search box (only used on the faction grid). */
+	let visibleFactions = $derived.by(() => {
 		const q = query.trim().toLowerCase();
-		const list = items.filter((item) => {
-			if (!q) return true;
-			return (
-				String(item.planet ?? '').toLowerCase().includes(q) ||
-				String(item.title ?? '').toLowerCase().includes(q)
-			);
-		});
+		if (!q) return factions;
+		return factions.filter((f) => f.name.toLowerCase().includes(q));
+	});
+
+	/** Quests within the selected faction, filtered by search and sorted. */
+	let factionQuests = $derived.by(() => {
+		if (selectedFaction === null) return [];
+		const q = query.trim().toLowerCase();
+		const list = items
+			.filter((item) => factionOf(item) === selectedFaction)
+			.filter((item) => {
+				if (!q) return true;
+				return (
+					String(item.planet ?? '').toLowerCase().includes(q) ||
+					String(item.title ?? '').toLowerCase().includes(q)
+				);
+			});
 		const sorted = [...list];
 		if (sort === 'sev-desc') sorted.sort((a, b) => b.severity - a.severity);
 		else if (sort === 'sev-asc') sorted.sort((a, b) => a.severity - b.severity);
 		else sorted.sort((a, b) => String(a.planet).localeCompare(String(b.planet)));
 		return sorted;
 	});
+
+	let isEmpty = $derived(
+		selectedFaction === null ? visibleFactions.length === 0 : factionQuests.length === 0
+	);
 
 	onMount(async () => {
 		try {
@@ -48,6 +99,21 @@
 		}
 	});
 
+	/** @param {string} name */
+	function openFaction(name) {
+		query = '';
+		const url = new URL($page.url);
+		url.searchParams.set('faction', name);
+		goto(url.pathname + url.search, { replaceState: false, keepFocus: true, noScroll: true });
+	}
+
+	function backToFactions() {
+		query = '';
+		const url = new URL($page.url);
+		url.searchParams.delete('faction');
+		goto(url.pathname + url.search, { replaceState: false, keepFocus: true, noScroll: true });
+	}
+
 	/** @param {Record<string, any>} item */
 	function open(item) {
 		selected = item;
@@ -59,7 +125,9 @@
 
 	/** @param {KeyboardEvent} e */
 	function onKeydown(e) {
-		if (e.key === 'Escape') close();
+		if (e.key !== 'Escape') return;
+		if (selected) close();
+		else if (selectedFaction !== null) backToFactions();
 	}
 
 	/** @param {number} severity */
@@ -76,38 +144,55 @@
 </svelte:head>
 
 <PageShell
-	heading="Quests"
-	tagline="Hey look it's all the planets"
+	heading={selectedFaction ?? 'Factions'}
+	tagline={selectedFaction ? 'Quests aligned with this faction' : 'Choose a faction to view its quests'}
 	{loading}
 	{error}
-	empty={filtered.length === 0}
+	empty={isEmpty}
 >
 	{#snippet toolbar()}
+		{#if selectedFaction !== null}
+			<button class="back" onclick={backToFactions}>← All factions</button>
+		{/if}
 		<input
 			class="control search"
 			type="search"
-			placeholder="Search planet or quest…"
+			placeholder={selectedFaction ? 'Search planet or quest…' : 'Search factions…'}
 			bind:value={query}
 		/>
-		<label class="sort">
-			<span class="sort-label">Sort</span>
-			<select class="control" bind:value={sort}>
-				<option value="sev-desc">Severity (high → low)</option>
-				<option value="sev-asc">Severity (low → high)</option>
-				<option value="planet">Planet (A–Z)</option>
-			</select>
-		</label>
+		{#if selectedFaction !== null}
+			<label class="sort">
+				<span class="sort-label">Sort</span>
+				<select class="control" bind:value={sort}>
+					<option value="sev-desc">Severity (high → low)</option>
+					<option value="sev-asc">Severity (low → high)</option>
+					<option value="planet">Planet (A–Z)</option>
+				</select>
+			</label>
+		{/if}
 	{/snippet}
 
-	{#each filtered as item (item.id)}
-		<button class="card quest-card" onclick={() => open(item)}>
-			<h2 class="card-title">{item.planet}</h2>
-			<p class="card-quest">{item.title}</p>
-			<span class="severity" data-level={item.severity}>
-				Severity {item.severity} · {severityLabel(item.severity)}
-			</span>
-		</button>
-	{/each}
+	{#if selectedFaction === null}
+		{#each visibleFactions as faction (faction.name)}
+			<button class="card faction-card" onclick={() => openFaction(faction.name)}>
+				<h2 class="card-title">{faction.name}</h2>
+				<span class="count">
+					{faction.quests.length}
+					{faction.quests.length === 1 ? 'quest' : 'quests'}
+				</span>
+			</button>
+		{/each}
+	{:else}
+		{#each factionQuests as item (item.id)}
+			<button class="card quest-card" onclick={() => open(item)}>
+				<h2 class="card-title">{item.planet}</h2>
+				<p class="card-quest">{item.title}</p>
+				<span class="severity" data-level={item.severity}>
+					Severity {item.severity} · {severityLabel(item.severity)}
+				</span>
+			</button>
+		{/each}
+	{/if}
 </PageShell>
 
 {#if selected}
@@ -138,8 +223,28 @@
 		font-size: 0.9rem;
 	}
 
-	/* Quest cards are interactive buttons, so extend the shared base card. */
-	.quest-card {
+	.back {
+		padding: 0.55rem 0.8rem;
+		border: 1px solid #1e293b;
+		border-radius: 10px;
+		background: #0b1424;
+		color: #e2e8f0;
+		font: inherit;
+		font-size: 0.95rem;
+		cursor: pointer;
+		transition:
+			border-color 0.15s ease,
+			background 0.15s ease;
+	}
+
+	.back:hover {
+		border-color: #38bdf8;
+		background: #111c33;
+	}
+
+	/* Cards are interactive buttons, so extend the shared base card. */
+	.quest-card,
+	.faction-card {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -154,13 +259,15 @@
 			box-shadow 0.15s ease;
 	}
 
-	.quest-card:hover {
+	.quest-card:hover,
+	.faction-card:hover {
 		transform: translateY(-3px);
 		border-color: #38bdf8;
 		box-shadow: 0 10px 30px -12px rgba(56, 189, 248, 0.5);
 	}
 
-	.quest-card:focus-visible {
+	.quest-card:focus-visible,
+	.faction-card:focus-visible {
 		outline: 2px solid #38bdf8;
 		outline-offset: 2px;
 	}
@@ -174,6 +281,16 @@
 		margin: 0;
 		color: #cbd5e1;
 		font-size: 1rem;
+	}
+
+	.count {
+		display: inline-block;
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+		font-size: 0.8rem;
+		font-weight: 600;
+		border: 1px solid #334155;
+		color: #94a3b8;
 	}
 
 	.severity {
