@@ -9,14 +9,23 @@
 	let query = $state('');
 	/** @type {'All' | 'Mod' | 'Accessory'} */
 	let typeFilter = $state('All');
+	/** @type {string} */
+	let subtypeFilter = $state('All');
+
+	// Subcategories come from the data itself, so new kinds show up without code changes.
+	let subtypes = $derived([
+		...new Set(items.map((item) => String(item.subtype ?? '')).filter(Boolean))
+	].sort());
 
 	let filtered = $derived.by(() => {
 		const q = query.trim().toLowerCase();
 		return items.filter((item) => {
 			if (typeFilter !== 'All' && item.type !== typeFilter) return false;
+			if (subtypeFilter !== 'All' && item.subtype !== subtypeFilter) return false;
 			if (!q) return true;
 			return (
 				String(item.title ?? '').toLowerCase().includes(q) ||
+				String(item.subtype ?? '').toLowerCase().includes(q) ||
 				String(item.effect ?? '').toLowerCase().includes(q)
 			);
 		});
@@ -50,13 +59,27 @@
 				<option value="Accessory">Accessory</option>
 			</select>
 		</label>
+		<label class="filter">
+			<span class="filter-label">Category</span>
+			<select class="control" bind:value={subtypeFilter}>
+				<option value="All">All</option>
+				{#each subtypes as subtype (subtype)}
+					<option value={subtype}>{subtype}</option>
+				{/each}
+			</select>
+		</label>
 	{/snippet}
 
 	{#each filtered as item (item.id)}
 		<article class="card mod-card">
 			<div class="card-head">
 				<h2 class="card-title">{item.title}</h2>
-				<span class="type" data-type={item.type}>{item.type}</span>
+				<div class="tags">
+					{#if item.subtype}
+						<span class="type subtype">{item.subtype}</span>
+					{/if}
+					<span class="type" data-type={item.type}>{item.type}</span>
+				</div>
 			</div>
 			<p class="card-effect">{item.effect}</p>
 		</article>
@@ -93,6 +116,13 @@
 		font-size: 1.15rem;
 	}
 
+	.tags {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
 	.type {
 		flex-shrink: 0;
 		padding: 0.2rem 0.6rem;
@@ -113,6 +143,14 @@
 	.type[data-type='Accessory'] {
 		background: rgba(167, 139, 250, 0.15);
 		color: #a78bfa;
+	}
+
+	.subtype {
+		background: #1e293b;
+		color: #cbd5e1;
+		text-transform: none;
+		letter-spacing: 0;
+		font-weight: 500;
 	}
 
 	.card-effect {

@@ -1,32 +1,142 @@
 [
 	{
 		"id": "1",
-		"title": "Gravity Anchor",
+		"title": "Breastplate",
 		"type": "Mod",
-		"effect": "Reduces fall damage by 80% and stabilizes footing on unstable ledges."
+		"subtype": "Medium Armor",
+		"effect": "+3 AC, +1 Saving Throws. Once per long rest, an attack's damage can be cut in half. This only applies to a hit."
 	},
 	{
 		"id": "2",
-		"title": "Echo Dampener",
-		"type": "Accessory",
-		"effect": "Muffles sound in a wide radius, preventing echoes from alerting nearby dwellers."
+		"title": "Plate Armor",
+		"type": "Mod",
+		"subtype": "Heavy Armor",
+		"effect": "+2 AC, +3 Saving Throws. Once per long rest, when you take damage, that same amount of damage can be used to heal an ally."
 	},
 	{
 		"id": "3",
-		"title": "Lumen Core",
+		"title": "Bow",
 		"type": "Mod",
-		"effect": "Emits a steady glow in total darkness and slowly recharges from ambient minerals."
+		"subtype": "Weapon",
+		"effect": "+4 Attack, +2 Damage."
 	},
 	{
 		"id": "4",
-		"title": "Chasm Grapple",
-		"type": "Accessory",
-		"effect": "Fires a retractable line across gaps, letting you cross collapsed bridges safely."
+		"title": "Armorless Mod",
+		"type": "Mod",
+		"subtype": "Armorless",
+		"effect": "+3 AC, +5 Saving Throws."
 	},
 	{
 		"id": "5",
-		"title": "Depth Rebreather",
+		"title": "Spell Focus",
 		"type": "Mod",
-		"effect": "Filters toxic air found in the silent depths, extending safe exploration time."
+		"subtype": "Spell Focus",
+		"effect": "+4 Spell Attack, +4 Damage."
+	},
+	{
+		"id": "6",
+		"title": "Ring",
+		"type": "Accessory",
+		"subtype": "Ring",
+		"effect": "+2 Attack, +1 Damage, +1 Saving Throw."
+	},
+	{
+		"id": "7",
+		"title": "Ring",
+		"type": "Accessory",
+		"subtype": "Ring",
+		"effect": "+1 Attack, +2 Damage, +1 AC, +1 Saving Throw."
+	},
+	{
+		"id": "8",
+		"title": "Blue's Staff",
+		"type": "Mod",
+		"subtype": "Staff",
+		"effect": "+4 Spell Damage. You may tie a blue mage's spell to this staff. Once per long rest, when you cast a spell, the effects but not damage of a blue mage spell can be activated on top of it."
+	},
+	{
+		"id": "9",
+		"title": "Light Armor",
+		"type": "Mod",
+		"subtype": "Light Armor",
+		"effect": "+6 Saving Throws."
+	},
+	{
+		"id": "10",
+		"title": "Ring",
+		"type": "Accessory",
+		"subtype": "Ring",
+		"effect": "+4 Attack, +4 Damage, +2 AC."
+	},
+	{
+		"id": "11",
+		"title": "Light Armor",
+		"type": "Mod",
+		"subtype": "Light Armor",
+		"effect": "+3 AC, +7 Saving Throws."
+	},
+	{
+		"id": "12",
+		"title": "Light Armor",
+		"type": "Mod",
+		"subtype": "Light Armor",
+		"effect": "+6 AC, +4 Saving Throws."
+	},
+	{
+		"id": "13",
+		"title": "Armorless Mod",
+		"type": "Mod",
+		"subtype": "Armorless",
+		"effect": "+2 AC, +4 Saving Throws."
+	},
+	{
+		"id": "14",
+		"title": "Armorless Mod",
+		"type": "Mod",
+		"subtype": "Armorless",
+		"effect": "+3 AC, +3 Saving Throws."
+	},
+	{
+		"id": "15",
+		"title": "Armorless Mod",
+		"type": "Mod",
+		"subtype": "Armorless",
+		"effect": "+5 AC, +1 Saving Throws."
+	},
+	{
+		"id": "16",
+		"title": "Greatsword Mod",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"effect": "+2 Attack, +4 Damage."
+	},
+	{
+		"id": "17",
+		"title": "Sharp Pitchfork",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"effect": "+5 Attack, +1 Damage."
+	},
+	{
+		"id": "18",
+		"title": "Bale and Hay",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"effect": "Pitchfork. +1 Attack, +2 Damage. Once per long rest, when an attack connects, you can choose to try to throw the opponent. Give an athletics check to determine height and distance: 1-5 is 5 feet, and each bracket above that is another 5 feet. For each foot thrown vertically, deal 1d6 damage."
+	},
+	{
+		"id": "19",
+		"title": "ShortSaber",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"effect": "+4 Attack, +2 Damage. This counts as a Short Sword as well."
+	},
+	{
+		"id": "20",
+		"title": "Leather Armor",
+		"type": "Mod",
+		"subtype": "Light Armor",
+		"effect": "+3 AC, +3 Saving Throws."
 	}
 ]
