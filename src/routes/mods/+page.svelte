@@ -7,15 +7,32 @@
 
 	/** @type {string} */
 	let query = $state('');
-	/** @type {'All' | 'Mod' | 'Accessory'} */
-	let typeFilter = $state('All');
+	/**
+	 * Accessories are unique, owned items rather than shared stock, so the list
+	 * opens on mods (weapons/armor) only; picking another type reveals them.
+	 * @type {'All' | 'Mod' | 'Accessory'}
+	 */
+	let typeFilter = $state('Mod');
 	/** @type {string} */
 	let subtypeFilter = $state('All');
 
-	// Subcategories come from the data itself, so new kinds show up without code changes.
+	// Subcategories come from the data itself, so new kinds show up without code
+	// changes. They are scoped to the active type so hidden types don't offer
+	// categories that can only ever return nothing.
 	let subtypes = $derived([
-		...new Set(items.map((item) => String(item.subtype ?? '')).filter(Boolean))
+		...new Set(
+			items
+				.filter((item) => typeFilter === 'All' || item.type === typeFilter)
+				.map((item) => String(item.subtype ?? ''))
+				.filter(Boolean)
+		)
 	].sort());
+
+	// Switching type can strip the chosen category from the options above; drop
+	// back to All so the select never shows a value it no longer contains.
+	$effect(() => {
+		if (subtypeFilter !== 'All' && !subtypes.includes(subtypeFilter)) subtypeFilter = 'All';
+	});
 
 	let filtered = $derived.by(() => {
 		const q = query.trim().toLowerCase();
@@ -26,6 +43,7 @@
 			return (
 				String(item.title ?? '').toLowerCase().includes(q) ||
 				String(item.subtype ?? '').toLowerCase().includes(q) ||
+				String(item.owner ?? '').toLowerCase().includes(q) ||
 				String(item.effect ?? '').toLowerCase().includes(q)
 			);
 		});
@@ -72,14 +90,19 @@
 
 	{#each filtered as item (item.id)}
 		<article class="card mod-card">
-			<div class="card-head">
-				<h2 class="card-title">{item.title}</h2>
-				<div class="tags">
-					{#if item.subtype}
-						<span class="type subtype">{item.subtype}</span>
-					{/if}
-					<span class="type" data-type={item.type}>{item.type}</span>
-				</div>
+			<h2 class="card-title">{item.title}</h2>
+			<!-- Chips sit on their own row so a long title can never squeeze them, and
+			     they wrap inside the card instead of overflowing it. -->
+			<div class="tags">
+				<!-- `owner` is optional and only meaningful for accessories, which are
+				     unique; mods (weapons/armor) are interchangeable and have no owner. -->
+				{#if item.type === 'Accessory' && item.owner}
+					<span class="type owner">{item.owner}</span>
+				{/if}
+				{#if item.subtype}
+					<span class="type subtype">{item.subtype}</span>
+				{/if}
+				<span class="type" data-type={item.type}>{item.type}</span>
 			</div>
 			<p class="card-effect">{item.effect}</p>
 		</article>
@@ -101,31 +124,31 @@
 	.mod-card {
 		display: flex;
 		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.card-head {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
+		align-items: flex-start;
+		gap: 0.6rem;
+		/* The card is a grid item, so cap its content to keep chips inside it. */
+		min-width: 0;
 	}
 
 	.card-title {
 		margin: 0;
 		font-size: 1.15rem;
+		max-width: 100%;
+		overflow-wrap: anywhere;
 	}
 
 	.tags {
-		flex-shrink: 0;
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		gap: 0.4rem;
+		max-width: 100%;
 	}
 
 	.type {
-		flex-shrink: 0;
 		padding: 0.2rem 0.6rem;
+		max-width: 100%;
+		overflow-wrap: anywhere;
 		border-radius: 999px;
 		font-size: 0.75rem;
 		font-weight: 600;
@@ -151,6 +174,13 @@
 		text-transform: none;
 		letter-spacing: 0;
 		font-weight: 500;
+	}
+
+	.owner {
+		background: rgba(251, 191, 36, 0.15);
+		color: #fbbf24;
+		text-transform: none;
+		letter-spacing: 0;
 	}
 
 	.card-effect {

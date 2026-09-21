@@ -69,7 +69,8 @@
 				if (!q) return true;
 				return (
 					String(item.planet ?? '').toLowerCase().includes(q) ||
-					String(item.title ?? '').toLowerCase().includes(q)
+					String(item.title ?? '').toLowerCase().includes(q) ||
+					String(item.assigned_to ?? '').toLowerCase().includes(q)
 				);
 			});
 		const sorted = [...list];
@@ -125,6 +126,16 @@
 	 * `max_stage` fall back to this.
 	 */
 	const DEFAULT_MAX_STAGE = 5;
+
+	/**
+	 * `assigned_to` is optional free text naming whoever has taken the quest,
+	 * usually a table like "Friday group". Empty or missing means unclaimed.
+	 * @param {Record<string, any>} item
+	 */
+	function assignedTo(item) {
+		const raw = String(item.assigned_to ?? '').trim();
+		return raw || null;
+	}
 
 	/**
 	 * Normalize a quest's stage progress into something a bar can render.
@@ -196,8 +207,13 @@
 			<button class="card quest-card" onclick={() => open(item)}>
 				<h2 class="card-title">{item.planet}</h2>
 				<p class="card-quest">{item.title}</p>
-				<span class="severity" data-level={item.severity}>
-					Severity {item.severity} · {severityLabel(item.severity)}
+				<span class="badges">
+					<span class="severity" data-level={item.severity}>
+						Severity {item.severity} · {severityLabel(item.severity)}
+					</span>
+					{#if assignedTo(item)}
+						<span class="assigned">Taken · {assignedTo(item)}</span>
+					{/if}
 				</span>
 				{#if stage.max > 0}
 					<span class="stage">
@@ -234,8 +250,13 @@
 			<button class="close" onclick={close} aria-label="Close">×</button>
 			<p class="panel-planet">{selected.planet}</p>
 			<h2 class="panel-title">{selected.title}</h2>
-			<span class="severity" data-level={selected.severity}>
-				Severity {selected.severity} · {severityLabel(selected.severity)}
+			<span class="badges panel-badges">
+				<span class="severity" data-level={selected.severity}>
+					Severity {selected.severity} · {severityLabel(selected.severity)}
+				</span>
+				{#if assignedTo(selected)}
+					<span class="assigned">Taken · {assignedTo(selected)}</span>
+				{/if}
 			</span>
 			{#if stage.max > 0}
 				<div class="stage panel-stage">
@@ -368,6 +389,25 @@
 		color: #ef4444;
 	}
 
+	.badges {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	/* Plaintext claim marker, e.g. "Taken · Friday group". */
+	.assigned {
+		display: inline-block;
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+		font-size: 0.8rem;
+		font-weight: 600;
+		border: 1px solid rgba(251, 191, 36, 0.5);
+		background: rgba(251, 191, 36, 0.12);
+		color: #fbbf24;
+	}
+
 	/* Stage progress: a discrete tile per stage, mirroring the enhancements bar. */
 	.stage {
 		display: flex;
@@ -485,7 +525,7 @@
 		letter-spacing: -0.02em;
 	}
 
-	.panel .severity {
+	.panel-badges {
 		margin-bottom: 1.25rem;
 	}
 

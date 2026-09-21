@@ -4,139 +4,162 @@
 		"title": "Breastplate",
 		"type": "Mod",
 		"subtype": "Medium Armor",
-		"effect": "+3 AC, +1 Saving Throws. Once per long rest, an attack's damage can be cut in half. This only applies to a hit."
+		"bonuses": { "ac": 3, "saves": 1 },
+		"effect": "Once per long rest, an attack's damage can be cut in half. This only applies to a hit."
 	},
 	{
 		"id": "2",
 		"title": "Plate Armor",
 		"type": "Mod",
 		"subtype": "Heavy Armor",
-		"effect": "+2 AC, +3 Saving Throws. Once per long rest, when you take damage, that same amount of damage can be used to heal an ally."
+		"bonuses": { "ac": 2, "saves": 3 },
+		"effect": "Once per long rest, when you take damage, that same amount of damage can be used to heal an ally."
 	},
 	{
 		"id": "3",
 		"title": "Bow",
 		"type": "Mod",
 		"subtype": "Weapon",
-		"effect": "+4 Attack, +2 Damage."
+		"bonuses": { "attack": 4, "damage": 2 },
+		"effect": ""
 	},
 	{
 		"id": "4",
 		"title": "Armorless Mod",
 		"type": "Mod",
 		"subtype": "Armorless",
-		"effect": "+3 AC, +5 Saving Throws."
+		"bonuses": { "ac": 3, "saves": 5 },
+		"effect": ""
 	},
 	{
 		"id": "5",
 		"title": "Spell Focus",
 		"type": "Mod",
 		"subtype": "Spell Focus",
-		"effect": "+4 Spell Attack, +4 Damage."
+		"bonuses": { "spellAttack": 4, "damage": 4 },
+		"effect": ""
 	},
 	{
 		"id": "6",
 		"title": "Ring",
 		"type": "Accessory",
 		"subtype": "Ring",
-		"effect": "+2 Attack, +1 Damage, +1 Saving Throw."
+		"owner": "",
+		"bonuses": { "saves": 1, "attack": 2, "damage": 1 },
+		"effect": ""
 	},
 	{
 		"id": "7",
 		"title": "Ring",
 		"type": "Accessory",
 		"subtype": "Ring",
-		"effect": "+1 Attack, +2 Damage, +1 AC, +1 Saving Throw."
+		"owner": "",
+		"bonuses": { "ac": 1, "saves": 1, "attack": 1, "damage": 2 },
+		"effect": ""
 	},
 	{
 		"id": "8",
 		"title": "Blue's Staff",
 		"type": "Mod",
 		"subtype": "Staff",
-		"effect": "+4 Spell Damage. You may tie a blue mage's spell to this staff. Once per long rest, when you cast a spell, the effects but not damage of a blue mage spell can be activated on top of it."
+		"bonuses": { "spellDamage": 4 },
+		"effect": "You may tie a blue mage's spell to this staff. Once per long rest, when you cast a spell, the effects but not damage of a blue mage spell can be activated on top of it."
 	},
 	{
 		"id": "9",
 		"title": "Light Armor",
 		"type": "Mod",
 		"subtype": "Light Armor",
-		"effect": "+6 Saving Throws."
+		"bonuses": { "saves": 6 },
+		"effect": ""
 	},
 	{
 		"id": "10",
 		"title": "Ring",
 		"type": "Accessory",
 		"subtype": "Ring",
-		"effect": "+4 Attack, +4 Damage, +2 AC."
+		"owner": "",
+		"bonuses": { "ac": 2, "attack": 4, "damage": 4 },
+		"effect": ""
 	},
 	{
 		"id": "11",
 		"title": "Light Armor",
 		"type": "Mod",
 		"subtype": "Light Armor",
-		"effect": "+3 AC, +7 Saving Throws."
+		"bonuses": { "ac": 3, "saves": 7 },
+		"effect": ""
 	},
 	{
 		"id": "12",
 		"title": "Light Armor",
 		"type": "Mod",
 		"subtype": "Light Armor",
-		"effect": "+6 AC, +4 Saving Throws."
+		"bonuses": { "ac": 6, "saves": 4 },
+		"effect": ""
 	},
 	{
 		"id": "13",
 		"title": "Armorless Mod",
 		"type": "Mod",
 		"subtype": "Armorless",
-		"effect": "+2 AC, +4 Saving Throws."
+		"bonuses": { "ac": 2, "saves": 4 },
+		"effect": ""
 	},
 	{
 		"id": "14",
 		"title": "Armorless Mod",
 		"type": "Mod",
 		"subtype": "Armorless",
-		"effect": "+3 AC, +3 Saving Throws."
+		"bonuses": { "ac": 3, "saves": 3 },
+		"effect": ""
 	},
 	{
 		"id": "15",
 		"title": "Armorless Mod",
 		"type": "Mod",
 		"subtype": "Armorless",
-		"effect": "+5 AC, +1 Saving Throws."
+		"bonuses": { "ac": 5, "saves": 1 },
+		"effect": ""
 	},
 	{
 		"id": "16",
 		"title": "Greatsword Mod",
 		"type": "Mod",
 		"subtype": "Weapon",
-		"effect": "+2 Attack, +4 Damage."
+		"bonuses": { "attack": 2, "damage": 4 },
+		"effect": ""
 	},
 	{
 		"id": "17",
 		"title": "Sharp Pitchfork",
 		"type": "Mod",
 		"subtype": "Weapon",
-		"effect": "+5 Attack, +1 Damage."
+		"bonuses": { "attack": 5, "damage": 1 },
+		"effect": ""
 	},
 	{
 		"id": "18",
 		"title": "Bale and Hay",
 		"type": "Mod",
 		"subtype": "Weapon",
-		"effect": "Pitchfork. +1 Attack, +2 Damage. Once per long rest, when an attack connects, you can choose to try to throw the opponent. Give an athletics check to determine height and distance: 1-5 is 5 feet, and each bracket above that is another 5 feet. For each foot thrown vertically, deal 1d6 damage."
+		"bonuses": { "attack": 1, "damage": 2 },
+		"effect": "Pitchfork. Once per long rest, when an attack connects, you can choose to try to throw the opponent. Give an athletics check to determine height and distance: 1-5 is 5 feet, and each bracket above that is another 5 feet. For each foot thrown vertically, deal 1d6 damage."
 	},
 	{
 		"id": "19",
 		"title": "ShortSaber",
 		"type": "Mod",
 		"subtype": "Weapon",
-		"effect": "+4 Attack, +2 Damage. This counts as a Short Sword as well."
+		"bonuses": { "attack": 4, "damage": 2 },
+		"effect": "This counts as a Short Sword as well."
 	},
 	{
 		"id": "20",
 		"title": "Leather Armor",
 		"type": "Mod",
 		"subtype": "Light Armor",
-		"effect": "+3 AC, +3 Saving Throws."
+		"bonuses": { "ac": 3, "saves": 3 },
+		"effect": ""
 	}
 ]
