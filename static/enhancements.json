@@ -9,7 +9,7 @@
 			[800, "Weapon Mods come with 7 rolls."],
 			[1000, "Weapon Mods can now roll a magic effect with double the frequency."]
 		],
-		"current_progress": 0
+		"current_progress": 27
 	},
 	{
 		"stat": "Dex",
@@ -21,7 +21,7 @@
 			[800, "Armor Mods come with 7 rolls."],
 			[1000, "Armor Mods can now roll a magic effect with double the frequency."]
 		],
-		"current_progress": 120
+		"current_progress": 161
 	},
 	{
 		"stat": "Con",
@@ -45,7 +45,7 @@
 			[750, "Any Armor can be made by selecting Stat line and 2 magic lines."],
 			[1000, "Any Weapon can be made by selecting Stat line and 2 magic lines."]
 		],
-		"current_progress": 169
+		"current_progress": 250
 	},
 	{
 		"stat": "Wis",
@@ -70,7 +70,7 @@
 			[800, "Start with 5 8d8+8 Potions"],
 			[1000, "Start with 5 10d8+8 Potions"]
 		],
-		"current_progress": 86
+		"current_progress": 128
 	},
 	{
 		"stat": "Data Center Research - Int/Wis",
@@ -78,6 +78,6 @@
 			[50, "One accessory per quest return"],
 			[100, "Modify Accessory Stat Line or Magic Effect"]
 		],
-		"current_progress": 0
+		"current_progress": 67
 	}
 ]
