@@ -192,7 +192,7 @@
 		"title": "Thunderstruck",
 		"type": "Mod",
 		"subtype": "Weapon",
-		"bonuses": { "attack": 4, "damage": 2 },
+		"bonuses": { "attack": 4 },
 		"effect": "Once per long rest, this weapon can make a ranged attack that will always hit. When it does, you can cast ThunderClap when it connects. A creature hit by this thunderclap is prone if it fails the save."
 	},
 	{
