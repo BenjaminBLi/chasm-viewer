@@ -34,6 +34,39 @@
 		if (subtypeFilter !== 'All' && !subtypes.includes(subtypeFilter)) subtypeFilter = 'All';
 	});
 
+	/**
+	 * Friendly names for the known keys in a `bonuses` object. Anything else is
+	 * humanized from its camelCase key so new stats render without a code change.
+	 * @type {Record<string, string>}
+	 */
+	const STAT_LABELS = {
+		ac: 'AC',
+		saves: 'Saves',
+		attack: 'Attack',
+		damage: 'Damage',
+		spellAttack: 'Spell Attack',
+		spellDamage: 'Spell Damage'
+	};
+
+	/**
+	 * Flatten an item's `bonuses` into label/value pairs for display. Values are
+	 * signed, since every bonus reads as a modifier (e.g. "AC +3").
+	 * @param {Record<string, any>} item
+	 */
+	function statsOf(item) {
+		const bonuses = item.bonuses;
+		if (!bonuses || typeof bonuses !== 'object') return [];
+		return Object.entries(bonuses)
+			.filter(([, value]) => Number(value) !== 0 && value !== null && value !== '')
+			.map(([key, value]) => {
+				const label =
+					STAT_LABELS[key] ??
+					key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, (c) => c.toUpperCase());
+				const n = Number(value);
+				return { key, label, value: Number.isFinite(n) ? `${n > 0 ? '+' : ''}${n}` : String(value) };
+			});
+	}
+
 	let filtered = $derived.by(() => {
 		const q = query.trim().toLowerCase();
 		return items.filter((item) => {
@@ -104,7 +137,19 @@
 				{/if}
 				<span class="type" data-type={item.type}>{item.type}</span>
 			</div>
-			<p class="card-effect">{item.effect}</p>
+			{#if statsOf(item).length > 0}
+				<dl class="stats">
+					{#each statsOf(item) as stat (stat.key)}
+						<div class="stat">
+							<dt>{stat.label}</dt>
+							<dd>{stat.value}</dd>
+						</div>
+					{/each}
+				</dl>
+			{/if}
+			{#if item.effect}
+				<p class="card-effect">{item.effect}</p>
+			{/if}
 		</article>
 	{/each}
 </PageShell>
@@ -181,6 +226,41 @@
 		color: #fbbf24;
 		text-transform: none;
 		letter-spacing: 0;
+	}
+
+	/* Stat values from `bonuses`: one bordered cell per stat, wrapping in place. */
+	.stats {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+		margin: 0;
+		max-width: 100%;
+	}
+
+	.stat {
+		display: flex;
+		align-items: baseline;
+		gap: 0.35rem;
+		padding: 0.2rem 0.55rem;
+		border: 1px solid #1e293b;
+		border-radius: 8px;
+		background: #0b1424;
+	}
+
+	.stat dt {
+		font-size: 0.7rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #64748b;
+	}
+
+	.stat dd {
+		margin: 0;
+		font-size: 0.85rem;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		color: #e2e8f0;
 	}
 
 	.card-effect {
