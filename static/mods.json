@@ -111,6 +111,7 @@
 		"title": "Armorless Mod",
 		"type": "Mod",
 		"subtype": "Armorless",
+		"quantity": 2,
 		"bonuses": { "ac": 3, "saves": 3 },
 		"effect": ""
 	},
@@ -160,6 +161,70 @@
 		"type": "Mod",
 		"subtype": "Light Armor",
 		"bonuses": { "ac": 3, "saves": 3 },
+		"effect": ""
+	},
+	{
+		"id": "21",
+		"title": "Gauntlet",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"bonuses": { "attack": 4, "damage": 2 },
+		"effect": ""
+	},
+	{
+		"id": "22",
+		"title": "Trident",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"bonuses": { "attack": 3, "damage": 3 },
+		"effect": ""
+	},
+	{
+		"id": "23",
+		"title": "Maul",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"bonuses": { "attack": 4, "damage": 2 },
+		"effect": ""
+	},
+	{
+		"id": "24",
+		"title": "Thunderstruck",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"bonuses": { "attack": 4 },
+		"effect": "Once per long rest, this weapon can make a ranged attack that will always hit. When it does, you can cast ThunderClap when it connects. A creature hit by this thunderclap is prone if it fails the save."
+	},
+	{
+		"id": "25",
+		"title": "Shortsword",
+		"type": "Mod",
+		"subtype": "Weapon",
+		"bonuses": { "attack": 4, "damage": 2 },
+		"effect": ""
+	},
+	{
+		"id": "26",
+		"title": "Light Armor Mod",
+		"type": "Mod",
+		"subtype": "Light Armor",
+		"bonuses": { "ac": 2, "saves": 4 },
+		"effect": ""
+	},
+	{
+		"id": "27",
+		"title": "Heavy Plate",
+		"type": "Mod",
+		"subtype": "Heavy Armor",
+		"bonuses": { "ac": 2 },
+		"effect": "Once per long rest you can ignore 1 turn's damage taken and turn golden. When you do, your astral projection can make 1 skill check that automatically passes."
+	},
+	{
+		"id": "28",
+		"title": "Armorless Mod",
+		"type": "Mod",
+		"subtype": "Armorless",
+		"bonuses": { "ac": 4, "saves": 2 },
 		"effect": ""
 	}
 ]

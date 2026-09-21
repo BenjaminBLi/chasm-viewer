@@ -136,6 +136,10 @@
 					<span class="type subtype">{item.subtype}</span>
 				{/if}
 				<span class="type" data-type={item.type}>{item.type}</span>
+				<!-- Mods aren't unique, so identical ones are stored once with a count. -->
+				{#if Number(item.quantity ?? 1) > 1}
+					<span class="type count">×{Number(item.quantity)}</span>
+				{/if}
 			</div>
 			{#if statsOf(item).length > 0}
 				<dl class="stats">
@@ -219,6 +223,12 @@
 		text-transform: none;
 		letter-spacing: 0;
 		font-weight: 500;
+	}
+
+	.count {
+		background: rgba(74, 222, 128, 0.15);
+		color: #4ade80;
+		font-variant-numeric: tabular-nums;
 	}
 
 	.owner {
